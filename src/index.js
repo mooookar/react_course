@@ -1,4 +1,4 @@
-import "./style.css";
+import "./style.scss";
 import addLoader from "./loader.js"
 
 let elem = document.createElement('div')
