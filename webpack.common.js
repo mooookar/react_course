@@ -10,6 +10,14 @@ module.exports = {
     devServer: {
         contentBase: './dist',
     },
+    entry: {
+        index: './src/index.js',
+    },
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].bundle.js',
+        chunkFilename: '[name].chunk.js',
+    },
     plugins: [
         new HtmlWebpackPlugin({
             title: 'React Course',
@@ -21,11 +29,6 @@ module.exports = {
             verbose: true,
         }),
     ],
-    output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: '[name].bundle.js',
-        chunkFilename: '[name].chunk.js',
-    },
     module: {
         rules: [
             {
