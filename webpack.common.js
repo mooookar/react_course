@@ -5,11 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-    entry: { index: './src/index.js', loader: './src/loader.js' },
     devtool: 'inline-source-map',
-    devServer: {
-        contentBase: './dist',
-    },
     entry: {
         index: './src/index.js',
     },
