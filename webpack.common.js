@@ -11,12 +11,13 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].bundle.js',
-        chunkFilename: '[name].chunk.js',
+        filename: '[name].js',
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'React Course',
+            template: 'index.html',
+            inject: 'body',
+            filename: 'index.html',
         }),
         new MiniCssExtractPlugin({
             filename: 'style.css',

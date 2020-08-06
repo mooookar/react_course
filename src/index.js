@@ -1,10 +1,9 @@
-import "./style.scss";
-import addLoader from "./loader.js"
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-let elem = document.createElement('div')
-elem.className = "title"
-elem.innerText = "React Course -- Task #2"
+import App from './app.jsx';
 
-document.body.appendChild(elem)
-
-addLoader();
+const root = document.createElement('div')
+root.setAttribute('id', 'root')
+    
+ReactDOM.render(<App />, document.getElementById('root'));
