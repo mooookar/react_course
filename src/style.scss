@@ -2,64 +2,193 @@
     padding: 0;
     margin: 0;
 }
+:focus {
+    outline: 0;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('fonts/OpenSans-Regular.ttf');
+}
+@font-face {
+    font-family: 'OpenSansLight';
+    src: url('fonts/OpenSans-Light.ttf');
+}
+@font-face {
+    font-family: 'OpenSansBold';
+    src: url('fonts/OpenSans-ExtraBold.ttf');
+}
 
 body {
+    background-color: #545454;
+    font-family: 'OpenSans', sans-serif;
+}
+
+.wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.bold {
+    font-family: 'OpenSansBold', sans-serif;
+}
+
+button {
+    border: 0;
+    border-radius: 3px;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.logo {
+    color: rgb(237, 80, 96);
+}
+
+.header {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-image: url('space.jpg');
-}
-
-.title {
-    position: absolute;
-    font-size: 2rem;
-    color: red;
-    text-align: center;
-    font-family: 'Amatic';
-}
-
-.loader {
+    height: 400px;
+    background-color: #333;
     position: relative;
-    width: 220px;
-    height: 220px;
-    border-radius: 50%;
-    border: 3px solid red;
-    border-top: 3px solid transparent;
-    animation: spin 1s linear infinite;
 
-    &::after,
-    &::before {
-        content: "";
+    .logo {
         position: absolute;
-        border-radius: 50%;
-    }
+        top: 20px;
+        left: 50px;
+        }
 
-    &::after {
-        width: 240px;
-        height: 240px;
-        top: -12px;
-        left: -12px;
-        border: 2px solid red;
-        border-top: 2px solid transparent;
-        animation: spin 0.5s linear reverse infinite;
-    }
+    .add-movie {
+        position: absolute;
+        top: 20px;
+        right: 50px;
+        color: rgb(237, 80, 96);
+        background-color: rgba(255, 255, 255, 0.1);
 
-    &::before {
-        width: 260px;
-        height: 260px;
-        top: -21px;
-        left: -21px;
-        border: 1px solid red;
-        border-top: 1px solid transparent;
-        animation: spin 4s linear infinite;
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
     }
 }
 
-@keyframes spin {
-    0% {transform: rotate(0deg)}
-    100% {transform: rotate(360deg)}
+.search {
+    width: 1000px;
+    display: flex;
+    flex-wrap: wrap;
+
+    &__title {
+        width: 100%;
+        color: #FFF;
+        font-family: 'OpenSansLight';
+        font-size: 2rem;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+    }
+
+    &__input {
+        flex-grow: 1;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 0;
+        border-radius: 3px;
+        padding: 10px;
+        color: #fff;
+        font-size: 1.2rem;
+        font-family: 'OpenSansLight';
+    }
+
+    &__button {
+        width: 200px;
+        margin-left: 10px;
+        background-color: rgb(237, 80, 96);
+        color: #FFF;
+
+        &:hover {
+            background-color:  #FFF;
+            color: rgb(237, 80, 96);
+        }
+    }
 }
 
+.movies-list {
+    background-color: rgb(35, 35, 35);
+    padding: 10px 50px;
 
+    &__container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px 50px;
+    }
+
+    &__movie {
+        width: 30%;
+        flex-grow: 1;
+        color: #FFF;
+        margin-bottom: 20px;
+    }
+    &__poster {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    &__info {
+        position: relative;
+    }
+    &__date {
+        position: absolute;
+        border: 1px solid #FFF;
+        font-size: 0.8rem;
+        border-radius: 3px;
+        padding: 3px 10px;
+        top: 0;
+        right: 0;
+    }
+}
+
+.utils {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid rgb(66, 66, 66);
+    box-shadow: 0 2px 0 #000;
+
+    &__filter {
+        display: flex;
+        list-style: none;
+
+        &-item {
+            color: #FFF;
+            padding: 20px 0;
+            margin: 0 20px -2px;
+            text-transform: uppercase;
+            transition: 0.3s;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+
+            &:first-of-type {
+                margin-left: 0;
+            }
+
+            &.selected,
+            &:hover {
+                border-bottom: 2px solid rgb(237, 80, 96);
+            }
+        }
+    }
+}
+
+.counter {
+    color: #FFF;
+    margin: 20px 0;
+}
+
+.footer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: rgb(66, 66, 66);
+}

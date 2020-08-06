@@ -13,19 +13,9 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: 'index.html',
-            inject: 'body',
-            filename: 'index.html',
-        }),
-        new MiniCssExtractPlugin({
-            filename: 'style.css',
-        }),
-        new CleanWebpackPlugin({
-            verbose: true,
-        }),
-    ],
+    resolve: {
+        extensions: ['.js', '.jsx', '.scss', '.css' ],
+    },
     module: {
         rules: [
             {
@@ -48,4 +38,17 @@ module.exports = {
             },
         ],
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: 'index.html',
+            inject: 'body',
+            filename: 'index.html',
+        }),
+        new MiniCssExtractPlugin({
+            filename: 'style.css',
+        }),
+        new CleanWebpackPlugin({
+            verbose: true,
+        }),
+    ],
 };
