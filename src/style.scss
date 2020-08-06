@@ -53,6 +53,8 @@ button {
     height: 400px;
     background-color: #333;
     position: relative;
+    background-image: url('3.png');
+    animation: bgslide 60s linear infinite;
 
     .logo {
         position: absolute;
@@ -73,10 +75,16 @@ button {
     }
 }
 
+@keyframes bgslide {
+    0% {background-position: 0 0;}
+    100% {background-position: -1200px -400px}
+}
+
 .search {
     width: 1000px;
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 70px;
 
     &__title {
         width: 100%;
@@ -135,14 +143,22 @@ button {
 
     &__info {
         position: relative;
+        color: rgb(189, 189, 189);
+    }
+    &__title {
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+    }
+    &__genres {
+        font-size: 0.8rem;
     }
     &__date {
-        position: absolute;
-        border: 1px solid #FFF;
         font-size: 0.8rem;
+        position: absolute;
+        border: 1px solid rgb(84, 84, 84);
         border-radius: 3px;
-        padding: 3px 10px;
-        top: 0;
+        padding: 3px 15px;
+        top: 2px;
         right: 0;
     }
 }
