@@ -1,48 +1,38 @@
 import React from 'react';
 
-import movies_array from './mock_movies';
-
-import Movie from './components/movie';
+import Header from './components/header';
+import Logo from './components/logo';
+import Button from './components/button';
+import Search from './components/search';
 import Filter from './components/filter';
+import Sort from './components/sort';
+import MoviesList from './components/movies_list';
+import Footer from './components/footer';
+
+import ErrorBoundary from './components/error_boundary';
 
 const App = () => (
     <div className="wrapper">
-        <div className="header">
-            <div className="logo">
-                <b className="bold">netflix</b>roulette
-            </div>
-            <button className="add-movie">+ Add movie</button>
+        <Header>
+            <Logo />
+            <Button classname="add-movie" text="+ Add movie" />
+            <Search />
+        </Header>
 
-            <div className="search">
-                <h2 className="search__title">Find your movie</h2>
-                <input
-                    className="search__input"
-                    type="text"
-                    placeholder="What do you want to watch?"
-                ></input>
-                <button className="search__button">Search</button>
+        <ErrorBoundary>
+            <div className="movies-list">
+                <div className="utils">
+                    <Filter />
+                    <Sort />
+                </div>
+                <div className="counter">39 movies found</div>
+                <MoviesList />
             </div>
-        </div>
+        </ErrorBoundary>
 
-        <div className="movies-list">
-            <div className="utils">
-               <Filter />
-                <select className="utils__sort">
-                    <option value="release">Release Date</option>
-                    <option value="release">Title</option>
-                </select>
-            </div>
-            <div className="counter">39 movies found</div>
-            <div className="movies-list__container">
-                {movies_array.map( movie => (<Movie key={movie.id} {...movie} />))}
-            </div>
-        </div>
-
-        <div className="footer">
-            <div className="logo">
-                <b className="bold">netflix</b>roulette
-            </div>
-        </div>
+        <Footer>
+            <Logo />
+        </Footer>
     </div>
 );
 
