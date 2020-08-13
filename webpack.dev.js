@@ -8,13 +8,5 @@ module.exports = merge(common, {
     devtool: 'inline-source-map',
     devServer: {
         contentBase: './dist',
-    },
-    // module: {
-    //     rules: [
-    //         {
-    //             test: /\.s[ac]ss$/,
-    //             use: [ 'style-loader', 'css-loader', 'sass-loader'],
-    //         },
-    //     ],
-    // },
+    }
 });
