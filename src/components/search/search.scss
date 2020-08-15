@@ -1,0 +1,39 @@
+.search {
+    width: 1000px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 70px;
+
+    &__title {
+        width: 100%;
+        color: #FFF;
+        font-family: 'MontserratLight';
+        font-size: 2rem;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+    }
+
+    &__input {
+        flex-grow: 1;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 0;
+        border-radius: 3px;
+        padding: 10px;
+        color: #fff;
+        font-size: 1.2rem;
+        font-family: 'MontserratLight';
+    }
+
+    &__button {
+        width: 200px;
+        margin-left: 10px;
+        background-color: rgb(237, 80, 96);
+        color: #FFF;
+
+        &:hover {
+            background-color:  #FFF;
+            color: rgb(237, 80, 96);
+        }
+    }
+}

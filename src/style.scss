@@ -2,64 +2,83 @@
     padding: 0;
     margin: 0;
 }
+:focus {
+    outline: 0;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('fonts/Montserrat-Regular.ttf');
+}
+@font-face {
+    font-family: 'MontserratLight';
+    src: url('fonts/Montserrat-Light.ttf');
+}
+@font-face {
+    font-family: 'MontserratBlack';
+    src: url('fonts/Montserrat-Black.ttf');
+}
 
 body {
+    background-color: #545454;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.bold {
+    font-family: 'MontserratBlack', sans-serif;
+}
+
+.utils {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    height: 100vh;
-    background-image: url('space.jpg');
+    border-bottom: 2px solid rgb(66, 66, 66);
+    box-shadow: 0 2px 0 #000;
+
+    &__filter {
+        display: flex;
+        list-style: none;
+
+        &-item {
+            color: #FFF;
+            padding: 20px 0;
+            margin: 0 20px -2px;
+            text-transform: uppercase;
+            transition: 0.3s;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+
+            &:first-of-type {
+                margin-left: 0;
+            }
+
+            &.selected,
+            &:hover {
+                border-bottom: 2px solid rgb(237, 80, 96);
+            }
+        }
+    }
+
+    &__sort {
+
+        &::before {
+            content: "SORT BY:";
+        }
+    }
 }
 
-.title {
-    position: absolute;
-    font-size: 2rem;
-    color: red;
+.counter {
+    color: #FFF;
+    margin: 20px 0;
+}
+
+.error {
+    font-size: 1rem;
+    padding: 20px;
+    color: #fff;
     text-align: center;
-    font-family: 'Amatic';
 }
-
-.loader {
-    position: relative;
-    width: 220px;
-    height: 220px;
-    border-radius: 50%;
-    border: 3px solid red;
-    border-top: 3px solid transparent;
-    animation: spin 1s linear infinite;
-
-    &::after,
-    &::before {
-        content: "";
-        position: absolute;
-        border-radius: 50%;
-    }
-
-    &::after {
-        width: 240px;
-        height: 240px;
-        top: -12px;
-        left: -12px;
-        border: 2px solid red;
-        border-top: 2px solid transparent;
-        animation: spin 0.5s linear reverse infinite;
-    }
-
-    &::before {
-        width: 260px;
-        height: 260px;
-        top: -21px;
-        left: -21px;
-        border: 1px solid red;
-        border-top: 1px solid transparent;
-        animation: spin 4s linear infinite;
-    }
-}
-
-@keyframes spin {
-    0% {transform: rotate(0deg)}
-    100% {transform: rotate(360deg)}
-}
-
-
