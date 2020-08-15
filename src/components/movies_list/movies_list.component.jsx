@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './movies_list.scss';
 import movies_array from './mock_movies';
 
 import Movie from './movie';
