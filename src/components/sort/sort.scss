@@ -1,0 +1,35 @@
+.utils__sort {
+    position: relative;
+
+    &::before {
+        content: "SORT BY:";
+        color: #AAA;
+        margin-right: 10px;
+    }
+    &-value {
+        display: inline-block;
+        width: 150px;
+        text-align: right;
+        color: #FFF;
+        white-space: nowrap;
+
+        &::after {
+            content: '';
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border: 5px solid transparent;
+            border-top: 7px solid #ed5060;
+            margin-left: 10px;
+            transform: translateY(3px);
+        }
+    }
+
+    &-select {
+        width: 150px;
+        opacity: 0;
+        position: absolute;
+        right: 0;
+        cursor: pointer;
+    }
+}
