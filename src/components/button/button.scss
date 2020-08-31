@@ -5,6 +5,30 @@ button {
     font-size: 1.2rem;
     padding: 10px 20px;
     text-transform: uppercase;
+    box-sizing: border-box;
     transition: 0.3s;
     cursor: pointer;
+
+    &.primary {
+        background-color: rgb(237, 80, 96);
+        border: 2px solid rgb(237, 80, 96);
+        color: #FFF;
+
+        &:hover {
+            background-color:  #FFF;
+            border-color: #FFF;
+            color: rgb(237, 80, 96);
+        }
+    }
+
+    &.secondary {
+        border: 2px solid rgb(237, 80, 96);
+        color: rgb(237, 80, 96);
+        background-color: transparent;
+
+        &:hover {
+            color: #FFF;
+            border-color: #FFF;
+        }
+    }
 }

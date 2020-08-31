@@ -62,13 +62,6 @@ body {
             }
         }
     }
-
-    &__sort {
-
-        &::before {
-            content: "SORT BY:";
-        }
-    }
 }
 
 .counter {
