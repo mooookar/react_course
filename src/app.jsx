@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import Header from './components/header';
 import Logo from './components/logo';
+import BackToSearch from './components/back_to_search';
+import MoviePreview from './components/movie_preview';
 import Button from './components/button';
 import Search from './components/search';
 
@@ -17,130 +19,120 @@ import movies_array from './mock_movies';
 
 import ErrorBoundary from './components/error_boundary';
 
-class App extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            movies: [],
-            modalType: '',
-            isModalOpen: false,
-            movieForEdit: null,
-            searchString: null
-        };
-    }
+const App = () => {
+    const [movies, setMovies] = useState([]);
+    const [modalType, setModalType] = useState('');
+    const [isModalOpen, setModalOpen] = useState(false);
+    const [movieForEdit, setMovieForEdit] = useState(null);
+    const [searchString, setSearchString] = useState(null);
+    const [moviePreview, setMoviePreview] = useState(null);
 
-    componentDidMount(){
-        this.setState({movies: movies_array})
-    }
+    useEffect(() => {
+        setMovies(movies_array);
+    }, []);
 
-    componentWillUnmount(){
-        console.log('unmounting')
-    }
+    const openModal = useCallback((type, id) => {
+        setModalType(type);
+        setModalOpen(true);
+        setMovieForEdit(id);
 
-    openModal(type, id) {
-        this.setState({
-            modalType: type,
-            isModalOpen: true,
-            movieForEdit: id,
-        });
         document.body.style.height = '100vh';
         document.body.style.overflow = 'hidden';
+        }, [modalType, movieForEdit],
+    )
+
+    function searchMovie(title) {
+        setSearchString(title);
     }
 
-    searchMovie(title) {
-        this.setState({ searchString: title });
-    }
+    const editMovie = useCallback((movie) => {
+        let newMovies = movies.map((v) => (v.id === movie.id ? movie : v));
+        setMovies(newMovies);
+        }, [movies],
+    )
 
-    editMovie(movie) {
-        let newMovies = this.state.movies.map((v) =>
-            v.id === movie.id ? movie : v
-        );
-        this.setState(prev => ({...prev , movies: newMovies }));
-    }
-
-    addMovie(movie) {
+    const addMovie = useCallback((movie) => {
         movie.id = Math.round(Math.random() * 999999);
-        this.setState({ movies: [...this.state.movies].concat(movie) });
+        setMovies([...movies].concat(movie));
+        }, [movies],
+    )
+
+    function deleteMovie() {
+        setMovies(movies.filter((movie) => movie.id != movieForEdit));
     }
 
-    deleteMovie() {
-        this.setState({
-            movies: this.state.movies.filter(
-                (movie) => movie.id != this.state.movieForEdit
-            ),
-        });
-    }
+    function closeModal() {
+        setModalOpen(false);
 
-    closeModal() {
-        this.setState({ isModalOpen: false });
         document.body.style.height = 'auto';
         document.body.style.overflow = 'auto';
     }
 
-    render() {
-        return (
-            <div className="wrapper">
-                <Header>
-                    <Logo />
-                    <Button
-                        classname="add-movie"
-                        text="+ Add movie"
-                        clickHandler={this.openModal.bind(this, 'add')}
+    return (
+        <div className="wrapper">
+            <Header>
+                <Logo />
+                {movies.find( movie => movie.id == moviePreview )  ? (
+                    <>
+                    <BackToSearch setMoviePreview={setMoviePreview}/>
+                    <MoviePreview movie={movies.find( movie => movie.id == moviePreview )} />
+                    </>
+                ) : (
+                    <>
+                        <Button
+                            classname="add-movie"
+                            text="+ Add movie"
+                            clickHandler={openModal.bind(this, 'add')}
+                        />
+                        <Search searchMovie={searchMovie} />
+                    </>
+                )}
+            </Header>
+
+            <ErrorBoundary>
+                <MoviesList
+                    movies={
+                        searchString
+                            ? movies.filter((v) =>
+                                  v.title
+                                      .toLowerCase()
+                                      .includes(searchString.toLowerCase())
+                              )
+                            : movies
+                    }
+                    openModal={openModal}
+                    setMoviePreview={setMoviePreview}
+                />
+            </ErrorBoundary>
+
+            <Footer>
+                <Logo />
+            </Footer>
+
+            <ModalWindow isOpen={isModalOpen} close={closeModal.bind(this)}>
+                {modalType == 'delete' ? (
+                    <Delete
+                        close={closeModal}
+                        deleteMovie={deleteMovie}
                     />
-                    <Search searchMovie={this.searchMovie.bind(this)} />
-                </Header>
-
-                <ErrorBoundary>
-                    <MoviesList
-                        movies={
-                            this.state.searchString
-                                ? this.state.movies.filter((v) =>
-                                      v.title
-                                          .toLowerCase()
-                                          .includes(
-                                              this.state.searchString.toLowerCase()
-                                          )
-                                  )
-                                : this.state.movies
-                        }
-                        openModal={this.openModal.bind(this)}
+                ) : null}
+                {modalType == 'edit' ? (
+                    <Edit
+                        close={closeModal}
+                        movie={movies.find((v) => v.id == movieForEdit)}
+                        editMovie={editMovie}
                     />
-                </ErrorBoundary>
-
-                <Footer>
-                    <Logo />
-                </Footer>
-
-                <ModalWindow
-                    isOpen={this.state.isModalOpen}
-                    close={this.closeModal.bind(this)}
-                >
-                    {this.state.modalType == 'delete' ? (
-                        <Delete
-                            close={this.closeModal.bind(this)}
-                            deleteMovie={this.deleteMovie.bind(this)}
-                        />
-                    ) : null}
-                    {this.state.modalType == 'edit' ? (
-                        <Edit
-                            close={this.closeModal.bind(this)}
-                            movie={this.state.movies.find(
-                                (v) => v.id == this.state.movieForEdit
-                            )}
-                            editMovie={this.editMovie.bind(this)}
-                        />
-                    ) : null}
-                    {this.state.modalType == 'add' ? (
-                        <Add
-                            close={this.closeModal.bind(this)}
-                            addMovie={this.addMovie.bind(this)}
-                            movies={this.state.movies}
-                        />
-                    ) : null}
-                </ModalWindow>
-            </div>
-        );
-    }
-}
+                ) : null}
+                {modalType == 'add' ? (
+                    <Add
+                        close={closeModal}
+                        addMovie={addMovie}
+                        movies={movies}
+                    />
+                ) : null}
+            </ModalWindow>
+        </div>
+    );
+};
 
 export default App;

@@ -1,0 +1,30 @@
+.movie-preview {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    min-height: 400px;
+    margin: 80px 50px 50px;
+
+    &__poster {
+        height: 100%;
+        width: 270px;
+        object-fit: cover;
+        margin-right: 50px;
+    }
+
+    &__info {
+        flex-grow: 1;
+        width: 300px;
+        color: #FFF;
+        padding: 30px 50px 0 0;
+
+        & > * {
+            margin-bottom: 20px;
+        }
+    }
+
+    &__year-time {
+        color: rgb(237, 80, 96);
+        font-size: 1.5rem;
+    }
+}
