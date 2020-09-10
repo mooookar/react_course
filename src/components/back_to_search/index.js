@@ -1,0 +1,1 @@
+export {default} from './back_to_search.component.jsx';

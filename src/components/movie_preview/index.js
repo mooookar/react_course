@@ -1,0 +1,1 @@
+export {default} from './movie_preview.component.jsx';

@@ -1,21 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import propTypes from 'prop-types';
 import './movie.scss';
 
-const Movie = ({ movie, openModal }) => {
+import useClickOutside from '../../../hooks/use-click-outside';
+
+const Movie = ({ movie, openModal, setMoviePreview }) => {
     const [isMenuOpen, setMenuOpen] = useState(false);
     const { id, title, year, genres, poster } = movie;
-
+    
+    const ref = useRef()
+    useClickOutside(ref, () => setMenuOpen(false));
+    
     function toggleMenu() {
         setMenuOpen(!isMenuOpen);
     }
 
+    function handlePosterClick(){
+        setMoviePreview(id)
+    }
+
     return (
         <div className="movies-list__movie">
-            <div className={`movies-list__actions ${isMenuOpen ? 'open' : ''}`}>
+            
+            <img
+                className="movies-list__poster"
+                src={poster}
+                alt={`${title} poster`}
+                onClick={handlePosterClick}
+            />
+            <div className="movies-list__info">
+                <p className="movies-list__date">{year}</p>
+                <p className="movies-list__title">{title}</p>
+                <p className="movies-list__genres">
+                    {genres
+                        .map((v) => v[0].toUpperCase() + v.substr(1))
+                        .join(', ')}
+                </p>
+            </div>
+            <div ref={ref} className={`movies-list__actions ${isMenuOpen ? 'open' : ''}`}>
                 <div
                     className="movies-list__actions-icon"
-                    onClick={() => toggleMenu()}
+                    onClick={toggleMenu}
                 ></div>
                 <ul className="movies-list__menu">
                     <li
@@ -37,20 +62,6 @@ const Movie = ({ movie, openModal }) => {
                         Delete
                     </li>
                 </ul>
-            </div>
-            <img
-                className="movies-list__poster"
-                src={poster}
-                alt={`${title} poster`}
-            />
-            <div className="movies-list__info">
-                <p className="movies-list__date">{year}</p>
-                <p className="movies-list__title">{title}</p>
-                <p className="movies-list__genres">
-                    {genres
-                        .map((v) => v[0].toUpperCase() + v.substr(1))
-                        .join(', ')}
-                </p>
             </div>
         </div>
     );
