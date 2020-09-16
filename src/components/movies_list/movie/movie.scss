@@ -96,6 +96,8 @@
         object-fit: cover;
         margin-bottom: 20px;
         cursor: pointer;
+        background-image: url('../../../assets/no-image.png');
+        background-size: cover;
     }
 
     &__info {
@@ -106,7 +108,7 @@
     &__title {
         font-size: 1.2rem;
         margin-bottom: 5px;
-        width: 70%;
+        width: 66%;
         text-transform: capitalize;
     }
 

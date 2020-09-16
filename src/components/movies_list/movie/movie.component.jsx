@@ -6,30 +6,36 @@ import useClickOutside from '../../../hooks/use-click-outside';
 
 const Movie = ({ movie, openModal, setMoviePreview }) => {
     const [isMenuOpen, setMenuOpen] = useState(false);
-    const { id, title, year, genres, poster } = movie;
-    
-    const ref = useRef()
+    const {
+        id,
+        title,
+        release_date,
+        genres,
+        poster_path,
+        vote_average,
+    } = movie;
+
+    const ref = useRef();
     useClickOutside(ref, () => setMenuOpen(false));
-    
+
     function toggleMenu() {
         setMenuOpen(!isMenuOpen);
     }
 
-    function handlePosterClick(){
-        setMoviePreview(id)
+    function handlePosterClick() {
+        setMoviePreview(id);
     }
 
     return (
         <div className="movies-list__movie">
-            
             <img
                 className="movies-list__poster"
-                src={poster}
-                alt={`${title} poster`}
+                src={poster_path}
+                alt=""
                 onClick={handlePosterClick}
             />
             <div className="movies-list__info">
-                <p className="movies-list__date">{year}</p>
+                <p className="movies-list__date">{release_date}</p>
                 <p className="movies-list__title">{title}</p>
                 <p className="movies-list__genres">
                     {genres
@@ -37,7 +43,10 @@ const Movie = ({ movie, openModal, setMoviePreview }) => {
                         .join(', ')}
                 </p>
             </div>
-            <div ref={ref} className={`movies-list__actions ${isMenuOpen ? 'open' : ''}`}>
+            <div
+                ref={ref}
+                className={`movies-list__actions ${isMenuOpen ? 'open' : ''}`}
+            >
                 <div
                     className="movies-list__actions-icon"
                     onClick={toggleMenu}
@@ -70,9 +79,9 @@ const Movie = ({ movie, openModal, setMoviePreview }) => {
 Movie.propTypes = {
     movie: propTypes.shape({
         title: propTypes.string.isRequired,
-        year: propTypes.number.isRequired,
+        release_date: propTypes.string.isRequired,
         genres: propTypes.arrayOf(propTypes.string).isRequired,
-        poster: propTypes.string.isRequired,
+        poster_path: propTypes.string.isRequired,
     }).isRequired,
     openModal: propTypes.func.isRequired,
 };

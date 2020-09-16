@@ -42,7 +42,10 @@ body {
 
     &__filter {
         display: flex;
+        position: relative;
         list-style: none;
+        width: 66%;
+        overflow: scroll;
 
         &-item {
             color: #FFF;
@@ -51,6 +54,7 @@ body {
             text-transform: uppercase;
             transition: 0.3s;
             border-bottom: 2px solid transparent;
+            white-space: nowrap;
             cursor: pointer;
 
             &:first-of-type {

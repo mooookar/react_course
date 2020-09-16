@@ -1,11 +1,14 @@
-import React, { createRef, useState } from 'react';
+import React, { useState } from 'react';
 import Button from '../../components/button';
+import { useDispatch } from 'react-redux';
+import { addNewMovie } from '../../actions';
 
-const Add = ({ close, addMovie }) => {
+const Add = ({ close }) => {
+    const dispatch = useDispatch();
     const [state, setState] = useState({
         id: '',
         title: '',
-        year: '',
+        release_date: '',
         url: '',
         genres: '',
         overview: '',
@@ -15,17 +18,19 @@ const Add = ({ close, addMovie }) => {
     function handleSubmit(e) {
         e.preventDefault();
 
-        addMovie({
-            id: Math.round(Math.random() * 99999),
-            title: state.title,
-            year: +state.year,
-            url: state.url,
-            genres: [...state.genres.split(' ')],
-            overview: state.overview,
-            runtime: state.runtime,
-            poster:
-                'https://images-na.ssl-images-amazon.com/images/I/71niXI3lxlL._AC_SY679_.jpg',
-        });
+        dispatch(
+            addNewMovie({
+                id: Math.round(Math.random() * 99999),
+                title: state.title,
+                release_date: state.release_date,
+                url: state.url,
+                genres: [...state.genres.split(' ')],
+                overview: state.overview,
+                runtime: state.runtime,
+                vote_average: (Math.random() * 8 + 2).toFixed(1), // TODO fake data
+                poster_path: '',
+            })
+        );
 
         close();
     }
@@ -35,7 +40,7 @@ const Add = ({ close, addMovie }) => {
             ...state,
             id: '',
             title: '',
-            year: '',
+            release_date: '',
             url: '',
             genres: '',
             overview: '',
@@ -64,7 +69,7 @@ const Add = ({ close, addMovie }) => {
                 <p className="title">RELEASE DATE</p>
                 <input
                     type="number"
-                    name="year"
+                    name="release_date"
                     onChange={updateMovieinfo.bind(this)}
                 />
             </label>

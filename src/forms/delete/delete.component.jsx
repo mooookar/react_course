@@ -1,11 +1,15 @@
 import React from 'react';
 import Button from '../../components/button';
+import { useDispatch } from 'react-redux';
+import { deleteMovie } from '../../actions';
 
-function Delete({ close, deleteMovie }) {
+function Delete({ close, movieId }) {
+    const dispatch = useDispatch()
 
     function handleDelete(e){
         e.preventDefault()
-        deleteMovie();
+        dispatch(deleteMovie(movieId))
+        // deleteMovie();
         close();
     }
 
