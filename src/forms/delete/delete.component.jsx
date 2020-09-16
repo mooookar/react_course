@@ -9,7 +9,6 @@ function Delete({ close, movieId }) {
     function handleDelete(e){
         e.preventDefault()
         dispatch(deleteMovie(movieId))
-        // deleteMovie();
         close();
     }
 
