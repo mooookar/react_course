@@ -9,6 +9,7 @@ import {
     DELETE_MOVIE,
     ADD_NEW_MOVIE,
     EDIT_MOVIE,
+    SET_ACTIVE_FILTERS,
 } from './constants.js';
 
 export function loadMoviesList() {
@@ -36,6 +37,9 @@ function addFiltersList(payload) {
 }
 export function filterByGenre(payload) {
     return { type: FILTER_BY_GENRE, payload };
+}
+export function setActiveFilters(payload){
+    return {type: SET_ACTIVE_FILTERS, payload}
 }
 export function resetFilters() {
     return { type: RESET_FILTERS };

@@ -9,14 +9,28 @@ import useBreakpoints from '../../hooks/use-breakpoint';
 import { useSelector } from 'react-redux';
 
 const MoviesList = ({ openModal, setMoviePreview }) => {
-    const moviesToRender = useSelector(state => state.moviesToRender)
+    const allMovies = useSelector((state) => state.movies);
+    const activeFilters = useSelector((state) => state.activeFilters);
+    const searchString = useSelector((state) => state.searchString);
+
+    let moviesToRender = allMovies.filter((movie) =>
+        activeFilters.length == 0
+            ? movie
+            : activeFilters.some((filter) => movie.genres.includes(filter))
+    );
+
+    if (searchString.length > 0) {
+        moviesToRender = allMovies.filter((movie) =>
+            movie.title.toLowerCase().includes(searchString.toLowerCase())
+        );
+    }
 
     const linedLayout = useBreakpoints(1100);
 
     return (
         <div className="movies-list">
             <div className="utils">
-                <Filter /> 
+                <Filter />
                 <Sort />
             </div>
             <div className="counter">{moviesToRender.length} movies found</div>

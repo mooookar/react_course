@@ -3,6 +3,7 @@ export const ADD_MOVIES = 'add_movie'
 
 export const ADD_FILTERS = 'add_filters'
 export const FILTER_BY_GENRE = 'filter_by_genre'
+export const SET_ACTIVE_FILTERS = 'set_active_filters'
 export const RESET_FILTERS = 'reset_filters'
 
 export const SORT_BY_VALUE = 'sort_by_value'

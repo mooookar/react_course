@@ -3,19 +3,21 @@ import './search.scss';
 
 import Button from '../button';
 import { useDispatch } from 'react-redux';
-import { searchByValue, searchReset } from '../../actions';
+import { searchByValue, searchReset, resetFilters } from '../../actions';
 
-function Search({ searchMovie }) {
+function Search() {
     const ref = createRef();
     const dispatch = useDispatch()
 
     function handleSearch(e) {
         e.preventDefault();
+        dispatch(resetFilters())
         dispatch(searchByValue(ref.current.value))
     }
 
     function clearInput() {
         dispatch(searchReset())
+        
         ref.current.value = ''
     }
 

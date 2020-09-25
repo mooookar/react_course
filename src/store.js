@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import {
     ADD_MOVIES,
     ADD_FILTERS,
-    FILTER_BY_GENRE,
+    SET_ACTIVE_FILTERS,
     RESET_FILTERS,
     SORT_BY_VALUE,
     SEARCH_RESET,
@@ -15,8 +15,9 @@ import {
 
 const initialState = {
     movies: [],
-    moviesToRender: [],
     filters: [],
+    activeFilters: [],
+    searchString: ''
 };
 
 function rootReducer(state = initialState, action) {
@@ -25,27 +26,21 @@ function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 movies: action.payload,
-                moviesToRender: action.payload,
             };
 
         case ADD_FILTERS:
             return { ...state, filters: action.payload };
 
-        case FILTER_BY_GENRE:
-            return {
-                ...state,
-                moviesToRender: state.movies.filter((movie) =>
-                    movie.genres.includes(action.payload)
-                ),
-            };
+        case SET_ACTIVE_FILTERS:
+            return {...state, activeFilters: state.activeFilters.concat(action.payload)}
 
         case RESET_FILTERS:
-            return { ...state, moviesToRender: state.movies };
+            return { ...state, activeFilters: [] };
 
         case SORT_BY_VALUE: {
             return {
                 ...state,
-                moviesToRender: [...state.movies].sort((a, b) => {
+                movies: [...state.movies].sort((a, b) => {
                     if (a[action.payload] > b[action.payload]) {
                         return 1;
                     }
@@ -60,22 +55,17 @@ function rootReducer(state = initialState, action) {
         case SEARCH_BY_VALUE:
             return {
                 ...state,
-                moviesToRender: state.movies.filter((movie) =>
-                    movie.title
-                        .toLowerCase()
-                        .includes(action.payload.toLowerCase())
-                ),
+                searchString: action.payload
             };
 
         case SEARCH_RESET:
-            return { ...state, moviesToRender: state.movies };
+            return { ...state, searchString: '' };
 
         case ADD_NEW_MOVIE: {
             let newMovies = state.movies.concat(action.payload);
             return {
                 ...state,
                 movies: [...newMovies],
-                moviesToRender: [...newMovies],
             };
         }
 
@@ -86,7 +76,6 @@ function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 movies: [...newMovies],
-                moviesToRender: [...newMovies],
             };
         }
 
@@ -97,7 +86,6 @@ function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 movies: [...newMovies],
-                moviesToRender: [...newMovies],
             };
         }
 
