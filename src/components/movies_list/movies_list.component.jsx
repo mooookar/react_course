@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './movies_list.scss';
 
 import Movie from './movie';
@@ -6,51 +6,32 @@ import Filter from '../filter';
 import Sort from '../sort';
 
 import useBreakpoints from '../../hooks/use-breakpoint';
+import { useSelector } from 'react-redux';
 
-const MoviesList = ({ movies, openModal, setMoviePreview }) => {
-    const [moviesToRender, setMoviesToRender] = useState(movies);
+const MoviesList = ({ openModal, setMoviePreview }) => {
+    const allMovies = useSelector((state) => state.movies);
+    const activeFilters = useSelector((state) => state.activeFilters);
+    const searchString = useSelector((state) => state.searchString);
+
+    let moviesToRender = allMovies.filter((movie) =>
+        activeFilters.length == 0
+            ? movie
+            : activeFilters.some((filter) => movie.genres.includes(filter))
+    );
+
+    if (searchString.length > 0) {
+        moviesToRender = allMovies.filter((movie) =>
+            movie.title.toLowerCase().includes(searchString.toLowerCase())
+        );
+    }
+
     const linedLayout = useBreakpoints(1100);
-
-    useEffect(() => {
-        setMoviesToRender(movies);
-    }, [movies]);
-
-    function filter(value) {
-        let filterByValue = value.toLowerCase();
-
-        if (filterByValue == 'all') {
-            setMoviesToRender(movies);
-            return;
-        }
-
-        setMoviesToRender(
-            movies.filter((movie) => {
-                return movie.genres.includes(filterByValue);
-            })
-        );
-    }
-
-    function sort(value) {
-        let comparator = value.toLowerCase();
-
-        setMoviesToRender((prev) =>
-            [...prev].sort((a, b) => {
-                if (a[comparator] > b[comparator]) {
-                    return 1;
-                }
-                if (a[comparator] < b[comparator]) {
-                    return -1;
-                }
-                return 0;
-            })
-        );
-    }
 
     return (
         <div className="movies-list">
             <div className="utils">
-                <Filter filter={filter} />
-                <Sort sort={sort} />
+                <Filter />
+                <Sort />
             </div>
             <div className="counter">{moviesToRender.length} movies found</div>
             <div

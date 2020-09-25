@@ -6,10 +6,12 @@
     margin: 80px 50px 50px;
 
     &__poster {
-        height: 100%;
+        height: auto;
         width: 270px;
         object-fit: cover;
         margin-right: 50px;
+        background-image: url('../../assets/no-image.png');
+        background-size: cover;
     }
 
     &__info {
@@ -26,5 +28,18 @@
     &__year-time {
         color: rgb(237, 80, 96);
         font-size: 1.5rem;
+    }
+
+    &__rating {
+        display: inline-block;
+        min-width: 30px;
+        height: 30px;
+        padding: 10px;
+        margin-left: 10px;
+        text-align: center;
+        font-size: 1.6rem;
+        border: 1px solid #FFF;
+        border-radius: 50%;
+        color: rgb(128, 184, 89);
     }
 }

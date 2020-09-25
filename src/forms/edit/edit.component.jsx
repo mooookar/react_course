@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import Button from '../../components/button';
 import '../forms.scss';
+import { useDispatch } from 'react-redux';
+import { editMovie } from '../../actions';
 
-const Edit = ({ movie, close, editMovie }) => {
+const Edit = ({ movie, close }) => {
+    const dispatch = useDispatch()
     const [state, setState] = useState({ ...movie });
 
     function handleSubmit(e) {
-        console.log(1)
         e.preventDefault();
-        editMovie(state);
+        dispatch(editMovie({...state}))
         close();
     }
 
@@ -18,10 +20,6 @@ const Edit = ({ movie, close, editMovie }) => {
 
         if (prop == 'genres') {
             value = value.split(' ');
-        }
-
-        if (prop == 'year') {
-            value = +value;
         }
 
         setState({
@@ -34,7 +32,7 @@ const Edit = ({ movie, close, editMovie }) => {
         setState({
             ...state,
             title: '',
-            year: '',
+            release_date: '',
             url: '',
             genres: [],
             overview: '',
@@ -65,8 +63,8 @@ const Edit = ({ movie, close, editMovie }) => {
                 <input
                     required
                     type="nimber"
-                    name="year"
-                    defaultValue={state.year}
+                    name="release_date"
+                    defaultValue={state.release_date}
                     onChange={updateMovieinfo.bind(this)}
                 />
             </label>

@@ -1,11 +1,14 @@
 import React, { createRef, useState, useEffect } from 'react';
 import './sort.scss';
+import { sortByValue } from '../../actions';
+import { useDispatch } from 'react-redux';
 
-const sort_options = ['Release Date', 'Title'];
+const sort_options = ['Release Date', 'Title', 'Rating'];
 
-const Sort = ({ sort }) => {
+const Sort = () => {
     const [label, setLabel] = useState('');
     const select = createRef();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setLabel(select.current.value);
@@ -13,11 +16,14 @@ const Sort = ({ sort }) => {
 
     function handleChange() {
         setLabel(select.current.value);
-        sort(
-            select.current.value == 'Release Date'
-                ? 'year'
-                : select.current.value
-        );
+
+        if(select.current.value == 'Release Date'){
+            dispatch(sortByValue('release_date'))
+        } else if (select.current.value == 'Title'){
+            dispatch(sortByValue('title'))
+        } else if (select.current.value == 'Rating'){
+            dispatch(sortByValue('vote_average'))
+        }
     }
 
     return (
