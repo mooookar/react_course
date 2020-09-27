@@ -1,124 +1,131 @@
-import React, { useState } from 'react';
-import Button from '../../components/button';
+import React from 'react';
 import '../forms.scss';
 import { useDispatch } from 'react-redux';
 import { editMovie } from '../../actions';
 
+import { useFormik } from 'formik';
+
+import { validate } from '../validate';
+
 const Edit = ({ movie, close }) => {
-    const dispatch = useDispatch()
-    const [state, setState] = useState({ ...movie });
+    const dispatch = useDispatch();
 
-    function handleSubmit(e) {
-        e.preventDefault();
-        dispatch(editMovie({...state}))
-        close();
-    }
-
-    function updateMovieinfo(e) {
-        let prop = e.target.name;
-        let value = e.target.value;
-
-        if (prop == 'genres') {
-            value = value.split(' ');
-        }
-
-        setState({
-            ...state,
-            [prop]: value,
-        });
-    }
-
-    function reset() {
-        setState({
-            ...state,
-            title: '',
-            release_date: '',
-            url: '',
-            genres: [],
-            overview: '',
-            runtime: '',
-        });
-    }
+    const formik = useFormik({
+        initialValues: {
+            title: movie.title,
+            release_date: movie.release_date,
+            url: movie.url || '',
+            genres: movie.genres.join(' '),
+            overview: movie.overview,
+            runtime: movie.runtime,
+        },
+        validate,
+        onSubmit: (values) => {
+            dispatch(
+                editMovie({
+                    ...movie,
+                    ...values,
+                    genres: values.genres.split(' '),
+                })
+            );
+            close();
+        },
+    });
 
     return (
-        <form className="form-edit" onSubmit={handleSubmit}>
-            <div className="close" onClick={close} title="Close"></div>
+        <form className="form-edit" onSubmit={formik.handleSubmit}>
             <h2>EDIT MOVIE</h2>
             <label>
                 <p className="title">MOVIE ID</p>
-                <p className="info">{state.id}</p>
+                <p className="info">{movie.id}</p>
             </label>
+
             <label>
                 <p className="title">TITLE</p>
                 <input
-                    required
-                    type="text"
+                    id="title"
                     name="title"
-                    defaultValue={state.title}
-                    onChange={updateMovieinfo.bind(this)}
+                    value={formik.values.title}
+                    onChange={formik.handleChange}
                 />
+                {formik.errors.title ? (
+                    <div className="form-error">{formik.errors.title}</div>
+                ) : null}
             </label>
+
             <label>
                 <p className="title">RELEASE DATE</p>
                 <input
-                    required
-                    type="nimber"
+                    id="release_date"
                     name="release_date"
-                    defaultValue={state.release_date}
-                    onChange={updateMovieinfo.bind(this)}
+                    value={formik.values.release_date}
+                    onChange={formik.handleChange}
                 />
+                {formik.errors.release_date ? (
+                    <div className="form-error">
+                        {formik.errors.release_date}
+                    </div>
+                ) : null}
             </label>
+
             <label>
                 <p className="title">MOVIE URL</p>
                 <input
-                    required
-                    type="text"
+                    id="url"
                     name="url"
-                    defaultValue={state.url}
-                    onChange={updateMovieinfo.bind(this)}
+                    value={formik.values.url}
+                    onChange={formik.handleChange}
                 />
+                {formik.errors.url ? (
+                    <div className="form-error">{formik.errors.url}</div>
+                ) : null}
             </label>
+
             <label>
                 <p className="title">GENRE</p>
                 <input
-                    required
-                    type="text"
+                    id="genres"
                     name="genres"
-                    defaultValue={
-                        state.genres.length > 0 ? state.genres.join(' ') : null
-                    }
-                    onChange={updateMovieinfo.bind(this)}
+                    value={formik.values.genres}
+                    onChange={formik.handleChange}
                 />
+                {formik.errors.genres ? (
+                    <div className="form-error">{formik.errors.genres}</div>
+                ) : null}
             </label>
+
             <label>
                 <p className="title">OVERVIEW</p>
                 <input
-                    required
-                    type="text"
+                    id="overview"
                     name="overview"
-                    defaultValue={state.overview}
-                    onChange={updateMovieinfo.bind(this)}
+                    value={formik.values.overview}
+                    onChange={formik.handleChange}
                 />
+                {formik.errors.overview ? (
+                    <div className="form-error">{formik.errors.overview}</div>
+                ) : null}
             </label>
             <label>
                 <p className="title">RUNTIME</p>
                 <input
-                    required
-                    type="text"
+                    id="runtime"
                     name="runtime"
-                    defaultValue={state.runtime}
-                    onChange={updateMovieinfo.bind(this)}
+                    value={formik.values.runtime}
+                    onChange={formik.handleChange}
                 />
+                {formik.errors.runtime ? (
+                    <div className="form-error">{formik.errors.runtime}</div>
+                ) : null}
             </label>
-            <br />
+
             <div className="form-buttons">
-                <Button
-                    type="reset"
-                    classname="secondary"
-                    text="Reset"
-                    clickHandler={reset.bind(this)}
-                />
-                <Button type="submit" classname="primary" text="Save" />
+                <button className="secondary" onClick={formik.resetForm}>
+                    Reset
+                </button>
+                <button type="submit" className="primary">
+                    Submit
+                </button>
             </div>
         </form>
     );
