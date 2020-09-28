@@ -48,7 +48,7 @@ const Edit = ({ movie, close }) => {
                     value={formik.values.title}
                     onChange={formik.handleChange}
                 />
-                {formik.errors.title ? (
+                {formik.touched.title && formik.errors.title ? (
                     <div className="form-error">{formik.errors.title}</div>
                 ) : null}
             </label>
@@ -61,7 +61,7 @@ const Edit = ({ movie, close }) => {
                     value={formik.values.release_date}
                     onChange={formik.handleChange}
                 />
-                {formik.errors.release_date ? (
+                {formik.touched.release_date && formik.errors.release_date ? (
                     <div className="form-error">
                         {formik.errors.release_date}
                     </div>
@@ -76,7 +76,7 @@ const Edit = ({ movie, close }) => {
                     value={formik.values.url}
                     onChange={formik.handleChange}
                 />
-                {formik.errors.url ? (
+                {formik.touched.url && formik.errors.url ? (
                     <div className="form-error">{formik.errors.url}</div>
                 ) : null}
             </label>
@@ -89,7 +89,7 @@ const Edit = ({ movie, close }) => {
                     value={formik.values.genres}
                     onChange={formik.handleChange}
                 />
-                {formik.errors.genres ? (
+                {formik.touched.genres && formik.errors.genres ? (
                     <div className="form-error">{formik.errors.genres}</div>
                 ) : null}
             </label>
@@ -102,7 +102,7 @@ const Edit = ({ movie, close }) => {
                     value={formik.values.overview}
                     onChange={formik.handleChange}
                 />
-                {formik.errors.overview ? (
+                {formik.touched.overview && formik.errors.overview ? (
                     <div className="form-error">{formik.errors.overview}</div>
                 ) : null}
             </label>
@@ -114,7 +114,7 @@ const Edit = ({ movie, close }) => {
                     value={formik.values.runtime}
                     onChange={formik.handleChange}
                 />
-                {formik.errors.runtime ? (
+                {formik.touched.runtime && formik.errors.runtime ? (
                     <div className="form-error">{formik.errors.runtime}</div>
                 ) : null}
             </label>

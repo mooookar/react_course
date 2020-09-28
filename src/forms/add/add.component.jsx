@@ -4,7 +4,41 @@ import { addNewMovie } from '../../actions';
 
 import { useFormik } from 'formik';
 
-import { validate } from '../validate';
+// import { validate } from '../validate';
+
+const validate = (values) => {
+    const errors = {};
+
+    if (!values.title) {
+        errors.title = 'This field is required';
+    }
+
+    if (!values.release_date) {
+        errors.release_date = 'This field is required';
+    } else if (!/^(\d){4}-(\d){1,2}-(\d){1,2}$/i.test(values.release_date)) {
+        errors.release_date = 'Invalid date format (YYYY-MM-DD)';
+    }
+
+    if (!values.url) {
+        errors.url = 'This field is required';
+    }
+
+    if (values.genres.length == 0) {
+        errors.genres = 'This field is required';
+    }
+
+    if (!values.overview) {
+        errors.overview = 'This field is required';
+    }
+
+    if (!values.runtime) {
+        errors.runtime = 'This field is required';
+    } else if (!/^(\d)+$/i.test(values.runtime)) {
+        errors.runtime = 'Please enter valid number of minutes';
+    }
+
+    return errors;
+};
 
 const Add = ({ close }) => {
     const dispatch = useDispatch();
@@ -42,9 +76,10 @@ const Add = ({ close }) => {
                     id="title"
                     name="title"
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     value={formik.values.title}
                 />
-                {formik.errors.title ? (
+                {formik.touched.title && formik.errors.title ? (
                     <div className="form-error">{formik.errors.title}</div>
                 ) : null}
 
@@ -53,9 +88,10 @@ const Add = ({ close }) => {
                     id="release_date"
                     name="release_date"
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     value={formik.values.release_date}
                 />
-                {formik.errors.release_date ? (
+                {formik.touched.release_date && formik.errors.release_date ? (
                     <div className="form-error">
                         {formik.errors.release_date}
                     </div>
@@ -66,9 +102,10 @@ const Add = ({ close }) => {
                     id="url"
                     name="url"
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     value={formik.values.url}
                 />
-                {formik.errors.url ? (
+                {formik.touched.url && formik.errors.url ? (
                     <div className="form-error">{formik.errors.url}</div>
                 ) : null}
 
@@ -77,9 +114,10 @@ const Add = ({ close }) => {
                     id="genres"
                     name="genres"
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     value={formik.values.genres}
                 />
-                {formik.errors.genres ? (
+                {formik.touched.genres && formik.errors.genres ? (
                     <div className="form-error">{formik.errors.genres}</div>
                 ) : null}
 
@@ -88,9 +126,10 @@ const Add = ({ close }) => {
                     id="overview"
                     name="overview"
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     value={formik.values.overview}
                 />
-                {formik.errors.overview ? (
+                {formik.touched.overview && formik.errors.overview ? (
                     <div className="form-error">{formik.errors.overview}</div>
                 ) : null}
 
@@ -99,9 +138,10 @@ const Add = ({ close }) => {
                     id="runtime"
                     name="runtime"
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     value={formik.values.runtime}
                 />
-                {formik.errors.runtime ? (
+                {formik.touched.runtime && formik.errors.runtime ? (
                     <div className="form-error">{formik.errors.runtime}</div>
                 ) : null}
 
