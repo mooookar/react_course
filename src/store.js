@@ -62,10 +62,9 @@ function rootReducer(state = initialState, action) {
             return { ...state, searchString: '' };
 
         case ADD_NEW_MOVIE: {
-            let newMovies = state.movies.concat(action.payload);
             return {
                 ...state,
-                movies: [...newMovies],
+                movies: state.movies.concat(action.payload),
             };
         }
 

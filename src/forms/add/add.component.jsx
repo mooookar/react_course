@@ -1,116 +1,126 @@
-import React, { useState } from 'react';
-import Button from '../../components/button';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addNewMovie } from '../../actions';
 
+import { useFormik } from 'formik';
+
+import { validate } from '../validate';
+
 const Add = ({ close }) => {
     const dispatch = useDispatch();
-    const [state, setState] = useState({
-        id: '',
-        title: '',
-        release_date: '',
-        url: '',
-        genres: '',
-        overview: '',
-        runtime: '',
-    });
 
-    function handleSubmit(e) {
-        e.preventDefault();
-
-        dispatch(
-            addNewMovie({
-                id: Math.round(Math.random() * 99999),
-                title: state.title,
-                release_date: state.release_date,
-                url: state.url,
-                genres: [...state.genres.split(' ')],
-                overview: state.overview,
-                runtime: state.runtime,
-                vote_average: (Math.random() * 8 + 2).toFixed(1), // TODO fake data
-                poster_path: '',
-            })
-        );
-
-        close();
-    }
-
-    function reset() {
-        setState({
-            ...state,
-            id: '',
+    const formik = useFormik({
+        initialValues: {
             title: '',
             release_date: '',
             url: '',
             genres: '',
             overview: '',
             runtime: '',
-        });
-    }
-
-    function updateMovieinfo(e) {
-        setState({ ...state, [e.target.name]: e.target.value });
-    }
+        },
+        validate,
+        onSubmit: (values) => {
+            dispatch(
+                addNewMovie({
+                    ...values,
+                    id: Math.round(Math.random() * 99999),
+                    vote_average: (Math.random() * 8 + 2).toFixed(1), // TODO fake data
+                    poster_path: '',
+                    genres: values.genres.split(' '),
+                })
+            );
+            close();
+        },
+    });
 
     return (
-        <form className="form-edit" onSubmit={handleSubmit.bind(this)}>
-            <div className="close" onClick={close} title="Close"></div>
-            <h2>ADD MOVIE</h2>
-
-            <label>
-                <p className="title">TITLE</p>
+        <>
+            <form className="form-edit" onSubmit={formik.handleSubmit}>
+                <h2>ADD MOVIE</h2>
+                <label htmlFor="title">Title</label>
                 <input
-                    type="text"
+                    id="title"
                     name="title"
-                    onChange={updateMovieinfo.bind(this)}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.title}
                 />
-            </label>
-            <label>
-                <p className="title">RELEASE DATE</p>
+                {formik.touched.title && formik.errors.title ? (
+                    <div className="form-error">{formik.errors.title}</div>
+                ) : null}
+
+                <label htmlFor="release_date">Release Date</label>
                 <input
-                    type="number"
+                    id="release_date"
                     name="release_date"
-                    onChange={updateMovieinfo.bind(this)}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.release_date}
                 />
-            </label>
-            <label>
-                <p className="title">MOVIE URL</p>
+                {formik.touched.release_date && formik.errors.release_date ? (
+                    <div className="form-error">
+                        {formik.errors.release_date}
+                    </div>
+                ) : null}
+
+                <label htmlFor="url">Movie URL</label>
                 <input
-                    type="text"
+                    id="url"
                     name="url"
-                    onChange={updateMovieinfo.bind(this)}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.url}
                 />
-            </label>
-            <label>
-                <p className="title">GENRE</p>
+                {formik.touched.url && formik.errors.url ? (
+                    <div className="form-error">{formik.errors.url}</div>
+                ) : null}
+
+                <label htmlFor="genres">Genres</label>
                 <input
-                    type="text"
+                    id="genres"
                     name="genres"
-                    onChange={updateMovieinfo.bind(this)}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.genres}
                 />
-            </label>
-            <label>
-                <p className="title">OVERVIEW</p>
+                {formik.touched.genres && formik.errors.genres ? (
+                    <div className="form-error">{formik.errors.genres}</div>
+                ) : null}
+
+                <label htmlFor="overview">Overview</label>
                 <input
-                    type="text"
+                    id="overview"
                     name="overview"
-                    onChange={updateMovieinfo.bind(this)}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.overview}
                 />
-            </label>
-            <label>
-                <p className="title">RUNTIME</p>
+                {formik.touched.overview && formik.errors.overview ? (
+                    <div className="form-error">{formik.errors.overview}</div>
+                ) : null}
+
+                <label htmlFor="runtime">Runtime</label>
                 <input
-                    type="text"
+                    id="runtime"
                     name="runtime"
-                    onChange={updateMovieinfo.bind(this)}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.runtime}
                 />
-            </label>
-            <br />
-            <div className="form-buttons">
-                <Button type="reset" classname="secondary" text="Reset" />
-                <Button type="submit" classname="primary" text="Save" />
-            </div>
-        </form>
+                {formik.touched.runtime && formik.errors.runtime ? (
+                    <div className="form-error">{formik.errors.runtime}</div>
+                ) : null}
+
+                <div className="form-buttons">
+                    <button className="secondary" onClick={formik.resetForm}>
+                        Reset
+                    </button>
+                    <button type="submit" className="primary">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </>
     );
 };
 
