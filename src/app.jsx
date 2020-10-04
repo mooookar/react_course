@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Header from './components/header';
 import Logo from './components/logo';
@@ -16,12 +17,14 @@ import Delete from './forms/delete';
 import Edit from './forms/edit';
 import Add from './forms/add';
 
+import Page404 from './pages/Page404';
+
 import ErrorBoundary from './components/error_boundary';
 import { loadMoviesList } from './actions';
 import { selectMoviesList } from './selectors';
 
 const App = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const movies = useSelector(selectMoviesList);
 
     const [modalType, setModalType] = useState('');
@@ -29,9 +32,8 @@ const App = () => {
     const [movieForEdit, setMovieForEdit] = useState(null);
     const [moviePreview, setMoviePreview] = useState(null);
 
-
     useEffect(() => {
-        dispatch(loadMoviesList())
+        dispatch(loadMoviesList());
     }, []);
 
     const openModal = useCallback(
@@ -59,39 +61,64 @@ const App = () => {
 
     return (
         <div className="wrapper">
-            <Header>
-                <Logo />
-                {movies.find((movie) => movie.id == moviePreview) ? (
-                    <>
-                        <BackToSearch setMoviePreview={setMoviePreview} />
-                        <MoviePreview
-                            movie={movies.find(
-                                (movie) => movie.id == moviePreview
-                            )}
-                        />
-                    </>
-                ) : (
-                    <>
+            <Switch>
+                <Route exact path="/">
+                    <Header>
+                        <Logo />
                         <Button
                             classname="add-movie"
                             text="+ Add movie"
                             clickHandler={openModal.bind(this, 'add')}
                         />
                         <Search searchMovie={searchMovie} />
-                    </>
-                )}
-            </Header>
+                    </Header>
 
-            <ErrorBoundary>
-                <MoviesList
-                    openModal={openModal}
-                    setMoviePreview={setMoviePreview}
+                    <ErrorBoundary>
+                        <MoviesList openModal={openModal} />
+                    </ErrorBoundary>
+
+                    <Footer />
+                </Route>
+                <Route exact path="/film/:id">
+                    <Header>
+                        <Logo />
+                        <BackToSearch />
+                        <MoviePreview />
+                    </Header>
+
+                    <ErrorBoundary>
+                        <MoviesList openModal={openModal} />
+                    </ErrorBoundary>
+
+                    <Footer />
+                </Route>
+                <Route path="/search/:name">
+                    <Header>
+                        <Logo />
+                        <Button
+                            classname="add-movie"
+                            text="+ Add movie"
+                            clickHandler={openModal.bind(this, 'add')}
+                        />
+                        <Search searchMovie={searchMovie} />
+                    </Header>
+
+                    <ErrorBoundary>
+                        <MoviesList openModal={openModal} />
+                    </ErrorBoundary>
+
+                    <Footer />
+                </Route>
+                <Route exact path="/404">
+                    <Page404 />
+                </Route>
+                <Redirect
+                    from="*"
+                    to={{
+                        pathname: '/404',
+                    }}
                 />
-            </ErrorBoundary>
-
-            <Footer>
-                <Logo />
-            </Footer>
+            </Switch>
 
             <ModalWindow isOpen={isModalOpen} close={closeModal.bind(this)}>
                 {modalType == 'delete' ? (
@@ -103,11 +130,7 @@ const App = () => {
                         movie={movies.find((v) => v.id == movieForEdit)}
                     />
                 ) : null}
-                {modalType == 'add' ? (
-                    <Add
-                        close={closeModal}
-                    />
-                ) : null}
+                {modalType == 'add' ? <Add close={closeModal} /> : null}
             </ModalWindow>
         </div>
     );

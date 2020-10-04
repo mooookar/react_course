@@ -4,8 +4,6 @@ import {
     FILTER_BY_GENRE,
     RESET_FILTERS,
     SORT_BY_VALUE,
-    SEARCH_BY_VALUE,
-    SEARCH_RESET,
     DELETE_MOVIE,
     ADD_NEW_MOVIE,
     EDIT_MOVIE,
@@ -17,6 +15,7 @@ export function loadMoviesList() {
         fetch('http://localhost:4000/movies?limit=18')
             .then((data) => data.json())
             .then((json) => {
+                console.log(json.data)
                 dispatch(addMoviesList(json.data));
                 dispatch(
                     addFiltersList([
@@ -47,13 +46,6 @@ export function resetFilters() {
 
 export function sortByValue(payload) {
     return { type: SORT_BY_VALUE, payload };
-}
-
-export function searchByValue(payload) {
-    return { type: SEARCH_BY_VALUE, payload };
-}
-export function searchReset() {
-    return { type: SEARCH_RESET };
 }
 
 export function addMoviesList(payload) {

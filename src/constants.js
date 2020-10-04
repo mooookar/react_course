@@ -8,9 +8,6 @@ export const RESET_FILTERS = 'reset_filters'
 
 export const SORT_BY_VALUE = 'sort_by_value'
 
-export const SEARCH_BY_VALUE = 'search_by_value'
-export const SEARCH_RESET = 'search_reset'
-
 export const MODAL_OPEN = 'modal_open'
 export const MODAL_CLOSE = 'modal_close'
 
