@@ -1,16 +1,7 @@
 import React from 'react';
-import { useHistory } from 'react-router';
 
-const BackToSearch = () => {
-    const history = useHistory()
-
-    function backToHome(){
-        history.push('/')
-    }
-
-    return (
-    <button className="back-to-search" onClick={backToHome} title="Back to Search">
-    </button>
-)};
+const BackToSearch = () => (
+    <a className="back-to-search" href="/" title="Back to Search"></a>
+);
 
 export default BackToSearch;
