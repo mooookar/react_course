@@ -6,8 +6,6 @@ import {
     SET_ACTIVE_FILTERS,
     RESET_FILTERS,
     SORT_BY_VALUE,
-    SEARCH_RESET,
-    SEARCH_BY_VALUE,
     ADD_NEW_MOVIE,
     EDIT_MOVIE,
     DELETE_MOVIE,
@@ -17,7 +15,6 @@ const initialState = {
     movies: [],
     filters: [],
     activeFilters: [],
-    searchString: ''
 };
 
 function rootReducer(state = initialState, action) {
@@ -51,15 +48,6 @@ function rootReducer(state = initialState, action) {
                 }),
             };
         }
-
-        case SEARCH_BY_VALUE:
-            return {
-                ...state,
-                searchString: action.payload
-            };
-
-        case SEARCH_RESET:
-            return { ...state, searchString: '' };
 
         case ADD_NEW_MOVIE: {
             return {

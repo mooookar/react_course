@@ -7,11 +7,12 @@ import Sort from '../sort';
 
 import useBreakpoints from '../../hooks/use-breakpoint';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 
-const MoviesList = ({ openModal, setMoviePreview }) => {
+const MoviesList = ({ openModal }) => {
     const allMovies = useSelector((state) => state.movies);
     const activeFilters = useSelector((state) => state.activeFilters);
-    const searchString = useSelector((state) => state.searchString);
+    const {name} = useParams();
 
     let moviesToRender = allMovies.filter((movie) =>
         activeFilters.length == 0
@@ -19,9 +20,9 @@ const MoviesList = ({ openModal, setMoviePreview }) => {
             : activeFilters.some((filter) => movie.genres.includes(filter))
     );
 
-    if (searchString.length > 0) {
+    if (name?.length > 0) {
         moviesToRender = allMovies.filter((movie) =>
-            movie.title.toLowerCase().includes(searchString.toLowerCase())
+            movie.title.toLowerCase().includes(name.toLowerCase())
         );
     }
 
@@ -40,12 +41,7 @@ const MoviesList = ({ openModal, setMoviePreview }) => {
                 }`}
             >
                 {moviesToRender.map((movie) => (
-                    <Movie
-                        key={movie.id}
-                        movie={movie}
-                        openModal={openModal}
-                        setMoviePreview={setMoviePreview}
-                    />
+                    <Movie key={movie.id} movie={movie} openModal={openModal} />
                 ))}
             </div>
         </div>

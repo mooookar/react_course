@@ -1,8 +1,7 @@
 import React from 'react';
 
-const BackToSearch = ({ setMoviePreview }) => (
-    <button className="back-to-search" onClick={() => setMoviePreview(null)} title="Back to Search">
-    </button>
+const BackToSearch = () => (
+    <a className="back-to-search" href="/" title="Back to Search"></a>
 );
 
 export default BackToSearch;

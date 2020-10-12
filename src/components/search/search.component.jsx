@@ -3,22 +3,26 @@ import './search.scss';
 
 import Button from '../button';
 import { useDispatch } from 'react-redux';
-import { searchByValue, searchReset, resetFilters } from '../../actions';
+import { resetFilters } from '../../actions';
+import { useHistory, useParams } from 'react-router';
 
 function Search() {
     const ref = createRef();
     const dispatch = useDispatch()
+    const history = useHistory()
+    const {name} = useParams()
 
     function handleSearch(e) {
         e.preventDefault();
         dispatch(resetFilters())
-        dispatch(searchByValue(ref.current.value))
+        // dispatch(searchByValue(ref.current.value))
+
+        history.push(`/search/${ref.current.value}`)
     }
 
     function clearInput() {
-        dispatch(searchReset())
-        
         ref.current.value = ''
+        history.push('/')
     }
 
     return (

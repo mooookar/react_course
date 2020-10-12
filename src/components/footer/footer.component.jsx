@@ -1,11 +1,12 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import './footer.scss';
+import Logo from '../logo';
 
-function Footer({children}) {
+function Footer() {
     return (
         <div className="footer">
-            {children}
+            <Logo />
         </div>
     )
 }

@@ -1,32 +1,52 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './movie-preview.scss';
+import { useSelector } from 'react-redux';
+import { selectMoviesList } from '../../selectors';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router';
 
-function MoviePreview({ movie }) {
-    const {
-        poster_path,
-        title,
-        release_date,
-        runtime,
-        overview,
-        vote_average,
-    } = movie;
+function MoviePreview() {
+    const movies = useSelector(selectMoviesList);
+    const { id } = useParams();
+    const [movie, setMovie] = useState(null);
 
-    return (
+    useEffect(() => {
+        setMovie(movies.find((movie) => movie.id == id));
+    });
+
+    return movie ? (
         <div className="movie-preview">
-            <img className="movie-preview__poster" src={poster_path} />
+            <img className="movie-preview__poster" src={movie.poster_path} />
             <div className="movie-preview__info">
                 <h1>
-                    {title}
+                    {movie.title}
                     <span className="movie-preview__rating">
-                        {vote_average}
+                        {movie.vote_average}
                     </span>
                 </h1>
                 <p>Oscar Winning Movie</p>
                 <p className="movie-preview__year-time">
-                    {release_date}&nbsp;&nbsp;&nbsp;{runtime}min
+                    {movie.release_date}&nbsp;&nbsp;&nbsp;{movie.runtime}min
                 </p>
-                <p>{overview}</p>
+                <p>{movie.overview}</p>
             </div>
+        </div>
+    ) : (
+        <div style={{ flexDirection: 'column', justifyContent: 'center' }}>
+            <div style={{ color: '#FFF', fontSize: '2rem' }}>
+                No Movie Found
+            </div>
+            <br />
+            <Link
+                to="/"
+                style={{
+                    display: 'block',
+                    textAlign: 'center',
+                    color: 'rgb(237, 80, 96)',
+                }}
+            >
+                Back to Home Page
+            </Link>
         </div>
     );
 }

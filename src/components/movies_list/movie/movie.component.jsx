@@ -2,9 +2,11 @@ import React, { useState, useRef } from 'react';
 import propTypes from 'prop-types';
 import './movie.scss';
 
+import {useHistory} from 'react-router-dom';
+
 import useClickOutside from '../../../hooks/use-click-outside';
 
-const Movie = ({ movie, openModal, setMoviePreview }) => {
+const Movie = ({ movie, openModal }) => {
     const [isMenuOpen, setMenuOpen] = useState(false);
     const {
         id,
@@ -12,8 +14,9 @@ const Movie = ({ movie, openModal, setMoviePreview }) => {
         release_date,
         genres,
         poster_path,
-        vote_average,
     } = movie;
+
+    let history = useHistory()
 
     const ref = useRef();
     useClickOutside(ref, () => setMenuOpen(false));
@@ -23,7 +26,8 @@ const Movie = ({ movie, openModal, setMoviePreview }) => {
     }
 
     function handlePosterClick() {
-        setMoviePreview(id);
+        // setMoviePreview(id);
+        history.push(`/film/${id}`)
     }
 
     return (
