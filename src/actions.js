@@ -15,7 +15,6 @@ export function loadMoviesList() {
         fetch('http://localhost:4000/movies?limit=18')
             .then((data) => data.json())
             .then((json) => {
-                console.log(json.data)
                 dispatch(addMoviesList(json.data));
                 dispatch(
                     addFiltersList([
@@ -31,14 +30,14 @@ export function loadMoviesList() {
     };
 }
 
-function addFiltersList(payload) {
+export function addFiltersList(payload) {
     return { type: ADD_FILTERS, payload };
 }
 export function filterByGenre(payload) {
     return { type: FILTER_BY_GENRE, payload };
 }
-export function setActiveFilters(payload){
-    return {type: SET_ACTIVE_FILTERS, payload}
+export function setActiveFilters(payload) {
+    return { type: SET_ACTIVE_FILTERS, payload };
 }
 export function resetFilters() {
     return { type: RESET_FILTERS };
@@ -52,9 +51,9 @@ export function addMoviesList(payload) {
     return { type: ADD_MOVIES, payload };
 }
 
-export function sortMovies(payload) {
-    return { type: SORT_MOVIES, payload };
-}
+// export function sortMovies(payload) {
+//     return { type: SORT_MOVIES, payload };
+// }
 
 export function addNewMovie(payload) {
     return { type: ADD_NEW_MOVIE, payload };

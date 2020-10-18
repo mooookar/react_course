@@ -15,7 +15,7 @@ export const validate = (values) => {
         errors.url = 'This field is required';
     }
 
-    if (values.genres.length == 0) {
+    if (!values.genres || values.genres.length == 0) {
         errors.genres = 'This field is required';
     }
 

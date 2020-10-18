@@ -30,7 +30,6 @@ const App = () => {
     const [modalType, setModalType] = useState('');
     const [isModalOpen, setModalOpen] = useState(false);
     const [movieForEdit, setMovieForEdit] = useState(null);
-    const [moviePreview, setMoviePreview] = useState(null);
 
     useEffect(() => {
         dispatch(loadMoviesList());
@@ -62,7 +61,7 @@ const App = () => {
     return (
         <div className="wrapper">
             <Switch>
-                <Route exact path="/">
+                <Route exact path={['/','/search/:name']}>
                     <Header>
                         <Logo />
                         <Button
@@ -84,23 +83,6 @@ const App = () => {
                         <Logo />
                         <BackToSearch />
                         <MoviePreview />
-                    </Header>
-
-                    <ErrorBoundary>
-                        <MoviesList openModal={openModal} />
-                    </ErrorBoundary>
-
-                    <Footer />
-                </Route>
-                <Route path="/search/:name">
-                    <Header>
-                        <Logo />
-                        <Button
-                            classname="add-movie"
-                            text="+ Add movie"
-                            clickHandler={openModal.bind(this, 'add')}
-                        />
-                        <Search searchMovie={searchMovie} />
                     </Header>
 
                     <ErrorBoundary>

@@ -17,7 +17,7 @@ const initialState = {
     activeFilters: [],
 };
 
-function rootReducer(state = initialState, action) {
+export function rootReducer(state = initialState, action) {
     switch (action.type) {
         case ADD_MOVIES:
             return {

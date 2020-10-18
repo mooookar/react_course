@@ -40,6 +40,7 @@ const Add = ({ close }) => {
                 <label htmlFor="title">Title</label>
                 <input
                     id="title"
+                    data-testid="title"
                     name="title"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -52,6 +53,7 @@ const Add = ({ close }) => {
                 <label htmlFor="release_date">Release Date</label>
                 <input
                     id="release_date"
+                    data-testid="release_date"
                     name="release_date"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -66,6 +68,7 @@ const Add = ({ close }) => {
                 <label htmlFor="url">Movie URL</label>
                 <input
                     id="url"
+                    data-testid="url"
                     name="url"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -78,6 +81,7 @@ const Add = ({ close }) => {
                 <label htmlFor="genres">Genres</label>
                 <input
                     id="genres"
+                    data-testid="genres"
                     name="genres"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -90,6 +94,7 @@ const Add = ({ close }) => {
                 <label htmlFor="overview">Overview</label>
                 <input
                     id="overview"
+                    data-testid="overview"
                     name="overview"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -102,6 +107,7 @@ const Add = ({ close }) => {
                 <label htmlFor="runtime">Runtime</label>
                 <input
                     id="runtime"
+                    data-testid="runtime"
                     name="runtime"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
