@@ -15,7 +15,6 @@ function Search() {
     function handleSearch(e) {
         e.preventDefault();
         dispatch(resetFilters())
-        // dispatch(searchByValue(ref.current.value))
 
         history.push(`/search/${ref.current.value}`)
     }

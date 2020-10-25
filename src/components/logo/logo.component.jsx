@@ -4,7 +4,7 @@ import './logo.scss';
 function Logo() {
 
     return (
-        <a className="logo" href="">
+        <a className="logo" href="/">
             <b className="bold">netflix</b>
             roulette
         </a>
